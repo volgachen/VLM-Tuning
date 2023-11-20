@@ -95,6 +95,14 @@ class Conversation:
 
         return ret
 
+    def before_answer(self):
+        if self.sep_style == SeparatorStyle.LLAMA_2:
+            return "[/INST] "
+        elif self.sep_style == SeparatorStyle.SINGLE:
+            return self.sep + self.roles[1] + ": "
+        else:
+            raise ValueError(f"Invalid style: {self.sep_style}")
+
     def append_message(self, role, message):
         self.messages.append([role, message])
 
