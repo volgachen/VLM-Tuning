@@ -1,7 +1,7 @@
 from typing import Dict
 import torch
 import transformers
-import conversation as conversation_lib
+import vlm_tuning.data.conversation as conversation_lib
 
 IGNORE_INDEX = -100
 IMAGE_TOKEN_INDEX = -200
