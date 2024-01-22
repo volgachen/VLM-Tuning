@@ -33,9 +33,10 @@ def tokenizer_image_token(prompt, tokenizer, image_token_index=IMAGE_TOKEN_INDEX
 def preprocess(
     sources,
     tokenizer: transformers.PreTrainedTokenizer,
-    has_image: bool = False
+    conv_template_name: str = "llava_llama_2",
+    has_image: bool = False,
 ) -> Dict:
-    conv = conversation_lib.default_conversation.copy()
+    conv = conversation_lib.conv_templates[conv_template_name].copy()
     roles = {"human": conv.roles[0], "gpt": conv.roles[1]}
 
     # Apply prompt templates

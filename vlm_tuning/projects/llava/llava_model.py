@@ -18,7 +18,6 @@
 import json
 import torch
 import transformers
-from llava import conversation as conversation_lib
 from llava.train.train import ModelArguments, DataArguments, TrainingArguments, find_all_linear_names, rank0_print
 from llava.model import LlavaLlamaForCausalLM, LlavaMPTForCausalLM
 
@@ -139,10 +138,6 @@ def create_llava_model(config_file):
         tokenizer.pad_token = tokenizer.unk_token
     else:
         tokenizer.pad_token = tokenizer.unk_token
-        if model_args.version in conversation_lib.conv_templates:
-            conversation_lib.default_conversation = conversation_lib.conv_templates[model_args.version]
-        else:
-            conversation_lib.default_conversation = conversation_lib.conv_templates["vicuna_v1"]
 
     if model_args.vision_tower is not None:
         model.get_model().initialize_vision_modules(

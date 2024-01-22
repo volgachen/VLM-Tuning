@@ -67,6 +67,7 @@ class LazySupervisedDataset(Dataset):
     def __init__(self, data_path: str,
                  tokenizer: transformers.PreTrainedTokenizer,
                  image_loader,
+                 conv_template_name: str = "llava_llama_2",
                  is_multimodal: bool = False,
                  mm_use_im_start_end: bool = False):
         super(LazySupervisedDataset, self).__init__()
@@ -75,6 +76,7 @@ class LazySupervisedDataset(Dataset):
         print("Formatting inputs...Skip in lazy mode")
         self.tokenizer = tokenizer
         self.list_data_dict = list_data_dict
+        self.conv_template_name = conv_template_name
 
         self.image_loader = image_loader
         self.mm_use_im_start_end = mm_use_im_start_end
@@ -100,6 +102,7 @@ class LazySupervisedDataset(Dataset):
         data_dict = preprocess(
             sources,
             self.tokenizer,
+            conv_template_name=self.conv_template_name,
             has_image=('image' in self.list_data_dict[i]),
         )
         if isinstance(i, int):
